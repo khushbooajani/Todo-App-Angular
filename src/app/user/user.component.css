@@ -1,0 +1,39 @@
+@media (min-width: 1200px){
+    .container {
+        max-width: 1198px;
+    }}
+    .navbar{
+        padding: 1.5rem;
+        justify-content: center;
+    }
+    /* Bordered form */
+    form {
+        border: .25rem solid  #ced4da;
+        border-radius: .25rem;
+        margin: 3rem 15rem;
+        padding: 2rem;
+      }
+    .center{
+        text-align: center;
+        justify-content: center;
+    }
+    .section{
+        margin-top: 3rem;
+    }
+    .btn{
+        margin-top: 2rem;
+    }
+    .avatar {
+        vertical-align: middle;
+        width: 10rem;
+        height: 10rem;
+        margin-top: 1rem;
+        
+      }
+      .border{
+        border: .05px solid #ced4da;    
+        border-radius: 50%;
+      }
+      .invalid-feedback{
+          display: block;
+      }

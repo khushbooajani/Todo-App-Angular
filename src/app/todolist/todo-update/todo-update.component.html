@@ -1,0 +1,145 @@
+<!-- <button  type="button" id="addTask" class="btn btn-light add-task-btn task-btn" data-toggle="modal"
+          data-target="#addTaskModal">Add New Task</button> -->
+<!-- Modal -->
+<div class="modal fade" id="addTaskModal" tabindex="-1" role="dialog" aria-labelledby="addTaskModalTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Add Task</h5>
+        <button (click)="close()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="todoForm" (ngSubmit)="ontodoSubmit(todoForm)" name="todoForm"
+          id="registrationForm">
+      <div class="modal-body">
+        
+          <div class="form-group row">
+            <label for="taskName" class="col-sm-2 col-form-label">Name</label>
+            <div class="col-sm-10">
+              <input [readOnly]="editName" formControlName="taskName" type="text" class="form-control" id="taskName"
+                placeholder="Name your task">
+              <div *ngIf="!todoForm.get('taskName').valid && todoForm.get('taskName').touched" id="taskNameError" class="invalid-feedback">Task Name is required</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="category" class="col-sm-2 col-form-label">Category</label>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input  formControlName="category" class="form-check-input" type="radio" name="category"
+                  id="personalCategory" value="personal" checked>
+                <label class="form-check-label" for="personalCategory">
+                  Personal
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input formControlName="category" class="form-check-input" type="radio" name="category"
+                  id="workCategory" value="work">
+                <label class="form-check-label" for="workCategory">
+                  Work
+                </label>
+              </div>
+              <div *ngIf="!todoForm.get('category').valid && todoForm.get('category').touched"  id="categoryError" class="invalid-feedback">Category selection is required</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="public" class="col-sm-2 col-form-label">Public</label>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input checked formControlName="public" class="form-check-input" type="radio" name="public" id="yesPublic"
+                  value="yesPublic">
+                <label class="form-check-label" for="yesPublic">
+                  Yes
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input formControlName="public" class="form-check-input" type="radio" name="public" id="notPublic"
+                  value="notPublic">
+                <label class="form-check-label" for="notPublic">
+                  No
+                </label>
+              </div>
+              <div *ngIf="!todoForm.get('public').valid && todoForm.get('public').touched" id="isPublicError" class="invalid-feedback">Is task Public or not ? </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="status" class="col-sm-2 col-form-label">Status</label>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input formControlName="status" class="form-check-input" type="radio" name="status" id="isDone"
+                  value="isDone">
+                <label class="form-check-label" for="done">
+                  Done
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input checked formControlName="status" class="form-check-input" type="radio" name="status" id="isPending"
+                  value="isPending">
+                <label class="form-check-label" for="isPending">
+                  Pending
+                </label>
+              </div>
+              <div *ngIf="!todoForm.get('status').valid && todoForm.get('status').touched" id="statusError" class="invalid-feedback">Status of Task is required</div>
+            </div>
+          </div>
+
+          <div class="form-group row">
+            <label for="todoDate" class="col-2 col-form-label">Date</label>
+            <div class="col-10">
+              <input formControlName="date"  class="form-control" type="date" id="todoDate">
+              <div *ngIf="!todoForm.get('date').valid && todoForm.get('date').touched" id="todoDateError" class="invalid-feedback">Date is required</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="reminder" class="col-sm-2 col-form-label">Reminder</label>
+            <div class="col-sm-10">
+              <div class="form-check">
+                <input formControlName="isReminder" class="form-check-input" type="radio" name="isReminder"
+                  id="yesReminder" value="yesReminder">
+                <label class="form-check-label" for="yesReminder">
+                  Yes
+                </label>
+              </div>
+
+              <div class="form-check">
+                <input formControlName="isReminder" class="form-check-input" type="radio" name="isReminder"
+                  id="noReminder" value="noReminder">
+                <label class="form-check-label" for="noReminder">
+                  No
+                </label>
+              </div>
+              <div *ngIf="!todoForm.get('isReminder').valid && todoForm.get('isReminder').touched" id="isReminderError" class="invalid-feedback">Reminder selection is required</div>
+            </div>
+          </div>
+          <div *ngIf="todoForm.get('isReminder').value === 'yesReminder'" class="form-group row " id="reminderDateDiv">
+            <label for="reminderDate" class="col-2 col-form-label">Reminder Date</label>
+            <div class="col-10">
+              <input formControlName="reminderDate" class="form-control" type="date" id="reminderDate">
+              <div *ngIf="!todoForm.get('reminderDate').valid && todoForm.get('reminderDate').touched" id="reminderDateError" class="invalid-feedback">Reminder Date is required</div>
+            </div>
+          </div>
+          <!--<div class="form-group row">
+            <label for="todoImage" class="col-sm-2 col-form-label">Todo Image</label>
+            <div class="col-sm-10">
+              <input formControlName="todoImage" type="file" class="form-control" id="todoImage"
+                placeholder="Profile Image" accept="image/*"/>
+              <div id="todoImageError" class="invalid-feedback">Todo image Image is required</div>
+              <img id="previewTodoImage" class="invalid-feedback avatar border" />
+            </div>
+          </div>-->
+          <div *ngIf="!todoForm.valid && todoForm.touched" id="isPublicError" class="invalid-feedback">Please enter
+            valid details in form</div>
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="close()" class="btn btn-secondary" data-dismiss="modal" #closeBtn>Close</button>
+        <button type="submit" class="btn btn-primary" id="add-task-btn">Save</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>

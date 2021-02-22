@@ -1,0 +1,122 @@
+<h3 class="center">Your Profile</h3>
+
+<form [formGroup]="signupForm" (ngSubmit)="onUserProfileUpdate(signupForm)" name="registrationForm"
+  id="registrationForm">
+  <div class="form-group row">
+    <label for="profileImage" class="col-sm-2 col-form-label">Profile Image</label>
+    <div class="col-sm-10">
+      <img [src]=currentUser.profileImage id="previewProfileImage" class="avatar border" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="email" class="col-sm-2 col-form-label">Email</label>
+    <div class="col-sm-10">
+      <input type="email" readonly class="form-control" id="email" placeholder="Email" formControlName="email"
+        [(ngModel)]=currentUser.email title="Must follow email pattern 'characters@characters.domain '" />
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="firstName" class="col-sm-2 col-form-label">First Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName"
+        [(ngModel)]=currentUser.firstName />
+      <div *ngIf="!signupForm.get('firstName').valid && signupForm.get('firstName').touched" id="firstNameError" class="invalid-feedback">
+        First Name is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="lastName" class="col-sm-2 col-form-label">Last Name</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName"
+        [(ngModel)]=currentUser.lastName />
+      <div  *ngIf="!signupForm.get('lastName').valid && signupForm.get('lastName').touched" id="lastNameError" class="invalid-feedback">
+        Last Name is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="password" class="col-sm-2 col-form-label">Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password"
+        [(ngModel)]=currentUser.password
+        title="Must contain at least one  number and one uppercase and lowercase letter, and at least 8 or more characters" />
+      <div  *ngIf="!signupForm.get('password').valid && signupForm.get('password').touched"  id="passwordError" class="invalid-feedback">
+        Password is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="confirmPassword" class="col-sm-2 col-form-label">Confirm Password</label>
+    <div class="col-sm-10">
+      <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password"
+        formControlName="confirmPassword" [ngModel]=currentUser.password />
+      <div *ngIf="!signupForm.get('confirmPassword').valid && 
+      signupForm.get('confirmPassword').touched && 
+      signupForm.get('password') !== signupForm.get('confirmPassword')" id="confirmPasswordError" id="confirmPasswordError" class="invalid-feedback">
+        Confirm Password is required
+      </div>
+    </div>
+  </div>
+
+  <fieldset class="form-group">
+    <div class="row">
+      <legend class="col-form-label col-sm-2 pt-0">Gender</legend>
+
+      <div class="col-sm-10">
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="male" value="male" formControlName="gender"
+            [(ngModel)]=currentUser.gender />
+          <label class="form-check-label" for="male"> Male </label>
+        </div>
+
+        <div class="form-check">
+          <input class="form-check-input" type="radio" name="gender" id="female" value="female" formControlName="gender"
+            [(ngModel)]=currentUser.gender />
+          <label class="form-check-label" for="female"> Female </label>
+        </div>
+
+        <div class="form-check disabled">
+          <input class="form-check-input" type="radio" name="gender" id="other" value="other" formControlName="gender"
+            [(ngModel)]=currentUser.gender />
+          <label class="form-check-label" for="other"> Other </label>
+        </div>
+      </div>
+    </div>
+  </fieldset>
+
+  <div class="form-group row">
+    <label for="address" class="col-sm-2 col-form-label">Address</label>
+    <div class="col-sm-10">
+      <textarea type="text" class="form-control" id="address" placeholder="Address" formControlName="address"
+        [(ngModel)]=currentUser.address></textarea>
+      <div *ngIf="!signupForm.get('address').valid && signupForm.get('address').touched" id="addressError" id="addressError" class="invalid-feedback">Address is required</div>
+    </div>
+  </div>
+
+  <div class="form-group row">
+    <label for="profileImage" class="col-sm-2 col-form-label">Profile Image</label>
+    <div class="col-sm-10">
+      <input type="file" class="form-control" id="profileImage" placeholder="Profile Image" accept="image/*"
+        formControlName="profileImage" (change)="onUploadImage($event)" multiple />
+      <div *ngIf="!signupForm.get('profileImage').valid && signupForm.get('profileImage').touched" id="profileImageError" class="invalid-feedback">
+        Profile Image is required
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group row center">
+    <div class="col-sm-10">
+      <div *ngIf="signupForm.invalid && signupForm.touched" id="profileImageError" class="invalid-feedback">Please enter
+        valid details in form</div>
+      <button type="submit" class="btn btn-primary">
+        Update Profile
+      </button>
+    </div>
+  </div>
+</form>

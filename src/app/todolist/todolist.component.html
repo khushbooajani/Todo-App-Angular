@@ -1,0 +1,60 @@
+<div class="section">
+    <div class="container">
+        <div class="center">
+            <img class="todo-icon border" src="assets/images/todo-icon.png">
+            <h1 class="inline ">Todos</h1>
+        </div>
+        <div class="center task">
+            <input id="search-task" [(ngModel)] = "searchtext" type="text" class="task-btn" placeholder="Search task by Name">
+            <select id="searchCategory" [(ngModel)] = "category" class=" searchCategory task-btn">
+                <option value="">Search by Category...</option>
+                <option>personal</option>
+                <option>work</option>
+            </select>
+            <select id="searchStatus" [(ngModel)] = "status" class="searchCategory task-btn">
+                <option value="">Search by Status...</option>
+                <option >isPending</option>
+                <option>isDone</option>
+            </select>
+        </div>
+        <div class="center task">
+            <button (click)="openModal()" type="button" id="addTask" class="btn btn-light add-task-btn task-btn" data-toggle="modal"
+                data-target="#addTaskModal">Add New Task</button>
+            <button type="button" id="deleteTask" class="btn btn-light task-btn" (click)="deleteSelectedTodos()"> Delete
+                Selected checkboxes</button>
+
+        </div>
+
+        <!-- No Todos to display -->
+        <div *ngIf="currentUser.todoList.length == 0" id="noTodo" class="center">
+            <h2>Todo is not Present</h2>
+        </div>
+        <!-- Display Todo -->
+        <div *ngFor="let todo of currentUser.todoList| searchFilter:searchtext:'taskName' 
+        | searchFilter:category:'category'
+        | searchFilter:status:'status'" id="Todo" class="center">
+
+            <input type="checkbox" (change)="addtodofordelete($event,todo['taskName'])" class="todoCheckbox" name="todoCheckbox" value="todo.tastName"
+                title="Selected Todo will be Deleted">
+            <button class="edit-todo" type="button" data-toggle="modal" data-target="#addTaskModal"
+            (click)="openModalForEdit(todo['taskName'] )" >edit</button>
+            <button class="collapsible" (click)="displayTodo()" id=i name="taskName"> {{ todo['taskName']  }}</button>
+            <div class="content">
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        <h5 class="card-title">{{ todo['taskName'] }}</h5>
+                        <li class="list-group-item">Category: {{todo['category']}}</li>
+                        <li class="list-group-item">Public: {{todo['isPublic']}}</li>
+                        <li class="list-group-item">Status: {{todo['status']}}</li>
+                        <li class="list-group-item">ToDo Date: {{todo['date']}}</li>
+                        <li #remider class="list-group-item">Reminder Set: {{todo['isReminder']}}</li>                        
+                        <li *ngIf= "todo['isReminder'] === 'yesReminder'" class="list-group-item">Reminder Set: {{ todo['reminderDate'] }} </li>
+                    </ul>
+                </div>
+            </div>
+            <br>
+
+        </div>
+        <app-todo-update [(editName)]="editTodoName" (editNameChange)="editTodoName=$event" *ngIf="addTodoFlag"></app-todo-update>
+    </div>
+</div>
